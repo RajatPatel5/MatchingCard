@@ -11,7 +11,13 @@ public class UIManager : MonoBehaviour
     public Canvas GameOverCanvas;
     public LevelManager levelManager;
     public Button nextButton;
-
+    public Button pauseButton;
+    public Button playButton;
+    public Image image1;
+    public Image image2;
+    public CardMatchingGame game;
+   
+   
     void Awake()
     {
         if (Instance == null)
@@ -29,19 +35,32 @@ public class UIManager : MonoBehaviour
     {
         WinCanvas.enabled = false;
         GameOverCanvas.enabled = false;
-
+        pauseButton.enabled = true;
     }
 
     public void OnWin()
     {
         WinCanvas.enabled = true;
         Timer.instance.StopTimer();
+        //pauseButton.enabled = false;
     }
     public void OnGameOver()
     {
         GameOverCanvas.enabled = true;
         Timer.instance.StopTimer();
-
+       // pauseButton.enabled = false;
+    }
+    public void OnPause()
+    {
+        image1.enabled = false;
+        Timer.instance.StopTimer();
+        game.SetButtonsInteractable(false);
+    }
+    public void OnPlay()
+    {
+        image1.enabled = true;
+        Timer.instance.StartTimer();
+        game.SetButtonsInteractable(true);
     }
     public void OnExit()
     {
@@ -52,23 +71,20 @@ public class UIManager : MonoBehaviour
     public void OnPlayAgain()
     {
         levelManager.RestartCurrentLevel();
-      //  SceneManager.LoadScene("SampleScene");
         WinCanvas.enabled = false;
         GameOverCanvas.enabled = false;
         Timer.instance.ResetTimer();
         Timer.instance.StartTimer();
-
     }
 
     public void OnNext()
     {
-       // nextButton.onClick.AddListener(levelManager.LoadNextLevel);
-        WinCanvas.enabled = false; // Ensure the WinCanvas is disabled before loading the next level
+        WinCanvas.enabled = false; 
         Timer.instance.ResetTimer();
         Timer.instance.StartTimer();
         levelManager.LoadNextLevel();
-
     }
+   
 }
 
 

@@ -562,6 +562,8 @@ MonoBehaviour:
   - {fileID: 5338004635079042150}
   - {fileID: 8654178262139087147}
   - {fileID: 4963646951462663902}
+  - {fileID: 0}
+  - {fileID: 0}
   images:
   - {fileID: 21300000, guid: fd838a479fedfe844b90b81e6b4d631e, type: 3}
   - {fileID: 21300000, guid: 82fb42ae76ec00a4b92e28d04d701ccf, type: 3}
@@ -574,3 +576,5 @@ MonoBehaviour:
   queMark: {fileID: 21300000, guid: 4bbcd74d26e297c46b3f929dc866ef9b, type: 3}
   gridLayoutGroupObject: {fileID: 9109868765635068175}
   pairs: 2
+  firstMatchAnimator: {fileID: 0}
+  textCanvas: {fileID: 0}
