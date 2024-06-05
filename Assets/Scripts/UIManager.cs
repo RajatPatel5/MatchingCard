@@ -7,8 +7,14 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
+    public Canvas StartCanvas;
+    public Canvas MainCanvas;
+    public Canvas PlayCanvas;
     public Canvas WinCanvas;
     public Canvas GameOverCanvas;
+    public Canvas PlayButtonCanvas;
+
+
     public LevelManager levelManager;
     public Button nextButton;
     public Button pauseButton;
@@ -16,51 +22,62 @@ public class UIManager : MonoBehaviour
     public Image image1;
     public Image image2;
     public CardMatchingGame game;
-   
-   
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this instance across scene loads
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Destroy any duplicate instances
+            Destroy(gameObject); 
         }
     }
 
     public void Start()
     {
+        StartCanvas.enabled = true;
         WinCanvas.enabled = false;
         GameOverCanvas.enabled = false;
+        MainCanvas.enabled = false;
+        PlayCanvas.enabled = false;
         pauseButton.enabled = true;
+        PlayButtonCanvas.enabled = false;
     }
 
+    public void OnPlayGame()
+    {
+        Timer.instance.ResetTimer();
+        PlayButtonCanvas.enabled=false;
+        MainCanvas.enabled = true;
+        PlayCanvas.enabled = true;
+      
+    }
     public void OnWin()
     {
         WinCanvas.enabled = true;
         Timer.instance.StopTimer();
-        //pauseButton.enabled = false;
+       
     }
     public void OnGameOver()
     {
         GameOverCanvas.enabled = true;
         Timer.instance.StopTimer();
-       // pauseButton.enabled = false;
+      
     }
     public void OnPause()
     {
         image1.enabled = false;
         Timer.instance.StopTimer();
-        game.SetButtonsInteractable(false);
+        game.SetButtons(false);
     }
     public void OnPlay()
     {
         image1.enabled = true;
         Timer.instance.StartTimer();
-        game.SetButtonsInteractable(true);
+        game.SetButtons(true);
     }
     public void OnExit()
     {

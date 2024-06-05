@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keep the timer across scenes
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -30,8 +30,6 @@ public class Timer : MonoBehaviour
         StartTimer();
         
     }
-
-
     void Update()
     {
         if (timerRunning)
@@ -44,14 +42,9 @@ public class Timer : MonoBehaviour
                 timerRunning = false;
                 countdown = 0f;
                 UIManager.Instance.OnGameOver();
-
-                //UiManager.instance.SwitchScreen(GameScreens.GameOver);
-                //SoundManager.inst.PlaySound(SoundName.GameOver);
-
             }
         }
     }
-
     void DisplayTime(float timeToDisplay)
     {
         if (timeToDisplay < 0)
@@ -64,7 +57,6 @@ public class Timer : MonoBehaviour
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
     public void ResetTimer()
     {
         countdown = 30f;
