@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     public Canvas WinCanvas;
     public Canvas GameOverCanvas;
     public Canvas PlayButtonCanvas;
+    public Canvas PauseCanvas;
+    public Canvas ExitCanvas;
 
 
     public LevelManager levelManager;
@@ -22,7 +24,9 @@ public class UIManager : MonoBehaviour
     public Image image1;
     public Image image2;
     public CardMatchingGame game;
+    public Timer timer;
 
+ 
     void Awake()
     {
         if (Instance == null)
@@ -45,11 +49,17 @@ public class UIManager : MonoBehaviour
         PlayCanvas.enabled = false;
         pauseButton.enabled = true;
         PlayButtonCanvas.enabled = false;
+        PauseCanvas.enabled = false;
+        ExitCanvas.enabled = false;
+        timer.enabled = false;
     }
 
     public void OnPlayGame()
     {
-        Timer.instance.ResetTimer();
+        timer.enabled = true;
+        game.InitializeTimer();
+        Timer.instance.StartTimer();
+       // int a=game.buttons.Length;
         PlayButtonCanvas.enabled=false;
         MainCanvas.enabled = true;
         PlayCanvas.enabled = true;
@@ -69,39 +79,67 @@ public class UIManager : MonoBehaviour
     }
     public void OnPause()
     {
+        PauseCanvas.enabled = true;
         image1.enabled = false;
         Timer.instance.StopTimer();
         game.SetButtons(false);
     }
-    public void OnPlay()
-    {
-        image1.enabled = true;
-        Timer.instance.StartTimer();
-        game.SetButtons(true);
-    }
+    //public void OnPlay()
+    //{
+    //    image1.enabled = true;
+    //    Timer.instance.StartTimer();
+    //    game.SetButtons(true);
+    //}
     public void OnExit()
     {
-        Application.Quit();
-        Debug.Log("Quit");
+        ExitCanvas.enabled = true;
+        PauseCanvas.enabled = false;
+        WinCanvas.enabled = false;
+        GameOverCanvas.enabled = false;
     }
 
     public void OnPlayAgain()
     {
         levelManager.RestartCurrentLevel();
+        game.InitializeTimer();
+        PauseCanvas.enabled = false;
+        image1.enabled = true;
         WinCanvas.enabled = false;
         GameOverCanvas.enabled = false;
         Timer.instance.ResetTimer();
         Timer.instance.StartTimer();
+        //ExitCanvas.enabled = false;
     }
 
     public void OnNext()
     {
-        WinCanvas.enabled = false; 
+        WinCanvas.enabled = false;
+        game.InitializeTimer();
         Timer.instance.ResetTimer();
         Timer.instance.StartTimer();
         levelManager.LoadNextLevel();
     }
-   
+
+    public void OnResume()
+    {
+        PauseCanvas.enabled = false;
+        image1.enabled = true;
+        Timer.instance.StartTimer();
+        game.SetButtons(true);
+    }
+
+    public void OnYes()
+    {
+        Application.Quit();
+        Debug.Log("Quit");
+    }
+
+    public void OnNoExit()
+    {
+        GameOverCanvas.enabled = true;
+        ExitCanvas.enabled = false;
+    }
+
 }
 
 

@@ -9,16 +9,18 @@ public class Timer : MonoBehaviour
 {
     
     public TMP_Text timerText;
-    private float countdown = 30f;
+    //private float countdown=30f;
+    private float countdown ;
     private bool timerRunning = true;
     public static Timer instance;
 
+    //int numberOfButtons;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); 
+            //DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -59,7 +61,7 @@ public class Timer : MonoBehaviour
     }
     public void ResetTimer()
     {
-        countdown = 30f;
+       // countdown = 30f;
         timerRunning = true;
     }
 
@@ -70,9 +72,14 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        timerRunning = true;
+        timerRunning = true; 
+    }
+
+    public void SetCountdown(float time)
+    {
+        countdown = time;
+        ResetTimer();
     }
 }
-
 
 

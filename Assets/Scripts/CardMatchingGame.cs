@@ -234,13 +234,20 @@ public class CardMatchingGame : MonoBehaviour
         AddImages();
         Shuffle(gameImages);
         InitializeCards();
+        InitializeTimer();
         UpdateAttemptsLabel();
+    }
+
+   public void InitializeTimer()
+    {
+        float timePerButton = 5.0f; // Set time per button as desired
+        float totalTime = buttons.Length * timePerButton;
+        Timer.instance.SetCountdown(totalTime);
     }
 
     void GetButtons()
     {
         buttons = gridLayoutGroupObject.GetComponentsInChildren<Button>();
-
         foreach (Button button in buttons)
         {    
             ResetButtonColors(button);
@@ -329,13 +336,15 @@ public class CardMatchingGame : MonoBehaviour
                 PlayScreenAnimation.OnPlayFirst?.Invoke("FIRST");
 
             }
-            if (counter==1 && buttons.Length>4)
+            if (counter==1 && buttons.Length>4 && !(pickedIndices.Count == buttons.Length))
             {
                 PlayScreenAnimation.OnPlayFirst?.Invoke("SUPER");
             }
-            if (counter == 2 && buttons.Length > 4)
+            if (counter == 2 && buttons.Length > 4 && !(pickedIndices.Count==buttons.Length))
             {
                 PlayScreenAnimation.OnPlayFirst?.Invoke("BRAVO");
+                StartCoroutine(PlayAnim());
+  
             }
             if (pickedIndices.Count == buttons.Length)
             {
@@ -366,6 +375,15 @@ public class CardMatchingGame : MonoBehaviour
         firstGuessMade = false;
         SetButtonsInteractable(true);
     }
+
+    IEnumerator PlayAnim()
+    {
+        yield return new WaitForSeconds(0.5f);
+        PlayScreenAnimation.OnPlayFirst?.Invoke("+2");
+        totalAttempts += 2;
+        UpdateAttemptsLabel();
+    }
+
     void SetButtonsInteractable(bool interactable)
     {
         foreach (Button button in buttons)
@@ -392,6 +410,7 @@ public class CardMatchingGame : MonoBehaviour
     {
         attemptsLabel.text = $"{totalAttempts}";
     }
+
     //for pause button
     public void SetButtons(bool interactable)
     {

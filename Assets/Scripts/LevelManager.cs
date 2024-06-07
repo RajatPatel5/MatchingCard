@@ -60,11 +60,9 @@ public class LevelManager : MonoBehaviour
             CardMatchingGame game = currentLevelInstance.GetComponent<CardMatchingGame>();
             game.totalAttempts = attempts;
             game.attemptsLabel = attemptNoLabel;
-         //   UIManager.Instance.game = game;
+         // UIManager.Instance.game = game;
             UIManager.Instance.game = currentLevelInstance.GetComponent<CardMatchingGame>();
         }
         
     }
 }
-
-
